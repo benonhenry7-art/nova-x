@@ -1,0 +1,194 @@
+const CACHE_NAME = "nova-x-v1";
+const FILES = ["./", "./index.html", "./style.css", "./app.js", "./manifest.json", "./icon.svg"];
+self.addEventListener("install", event => {
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(FILES)));
+  self.skipWaiting();
+});
+self.addEventListener("activate", event => {
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))));
+  self.clients.claim();
+});
+self.addEventListener("fetch", event => {
+  if (event.request.method !== "GET") return;
+  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request)));
+});
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+:root{--bg:#050914;--panel:#0b1425;--blue:#36bfff;--cyan:#75e4ff;--white:#edf7ff;--muted:#91a5bb;--line:#1a2d47}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 75% 20%,#123c6b33,transparent 38%),radial-gradient(ellipse at 15% 65%,#06345a22,transparent 35%);z-index:-2}.stars{position:fixed;inset:0;z-index:-1;opacity:.28;background-image:radial-gradient(#b8e8ff 1px,transparent 1px),radial-gradient(#70bfff 1px,transparent 1px);background-size:83px 83px,137px 137px;background-position:0 0,33px 57px}
+.topbar{height:76px;max-width:1200px;margin:auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #17283c}.brand{display:flex;gap:10px;align-items:center;color:var(--white);text-decoration:none;font-family:Orbitron,sans-serif;font-weight:800;letter-spacing:2px}.brand b{color:var(--blue)}.brand-mark{color:var(--blue);font-size:25px;text-shadow:0 0 16px var(--blue)}nav{display:flex;gap:26px}nav a{color:#b3c5d8;text-decoration:none;font-size:12px;letter-spacing:.6px}nav a:hover{color:var(--cyan)}.menu-button{display:none;background:none;color:white;border:1px solid var(--line);padding:8px;border-radius:8px}
+.hero{max-width:1200px;margin:auto;min-height:560px;padding:65px 28px 55px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px}.eyebrow,.panel-label,.card-tag{font-family:Orbitron,sans-serif;color:var(--blue);font-size:10px;letter-spacing:2px}.hero h1{font-family:Orbitron,sans-serif;font-size:clamp(35px,5vw,62px);line-height:1.14;letter-spacing:-2px;margin:20px 0}.hero h1 span,.blue{color:var(--blue);text-shadow:0 0 22px #168dff33}.intro{max-width:480px;color:#a6b8cb;line-height:1.8;font-size:14px}.hero-actions{display:flex;gap:12px;margin-top:28px}.button{border:1px solid #285174;padding:12px 18px;border-radius:5px;font-size:12px;font-weight:700;letter-spacing:.4px;text-decoration:none;display:inline-flex;gap:12px;align-items:center;cursor:pointer;color:var(--white);background:transparent}.primary{background:linear-gradient(110deg,#087ad5,#1ab5ed);border-color:#28b9ff;color:white;box-shadow:0 0 24px #008dff22}.primary:hover{filter:brightness(1.12)}.secondary:hover{border-color:var(--blue)}.hero-foot{margin-top:45px;font:10px Orbitron,sans-serif;letter-spacing:1.5px;color:#7794ad}.pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:#43e7b3;box-shadow:0 0 10px #43e7b3;margin-right:8px}
+.rocket-scene{height:420px;position:relative;display:grid;place-items:center;overflow:hidden}.planet{width:225px;height:225px;border-radius:50%;background:radial-gradient(circle at 30% 28%,#4ab8ef,#144b85 45%,#071329 75%);box-shadow:inset -35px -20px 45px #02050e,0 0 65px #007dff22;position:absolute}.orbit{position:absolute;border:1px solid #42c6ff70;border-radius:50%;width:370px;height:125px;transform:rotate(-27deg);box-shadow:0 0 13px #078aff22}.orbit-two{width:320px;height:280px;transform:rotate(55deg);border-color:#3e9dff35}.rocket{position:relative;color:#e8f8ff;font-size:120px;z-index:2;transform:rotate(0deg);text-shadow:0 0 24px #43caff;filter:drop-shadow(0 0 15px #168dff);margin-top:-35px}.rocket-window{position:absolute;width:17px;height:17px;border:3px solid #3abfff;border-radius:50%;top:44px;left:50%;transform:translateX(-50%)}.flame{position:absolute;width:20px;height:70px;background:linear-gradient(#8af3ff,#0789ff,transparent);filter:blur(5px);top:90px;left:50%;transform:translateX(-50%)}.scene-label{position:absolute;right:8%;bottom:15%;font:11px Orbitron,sans-serif;color:#5ccfff;letter-spacing:2px}.scene-label small{font-size:8px;color:#7897b1}.star{position:absolute;color:#c6f5ff;text-shadow:0 0 15px #2abaff}.star-a{top:13%;right:18%;font-size:25px}.star-b{top:28%;left:8%;font-size:20px}.star-c{bottom:20%;left:18%;font-size:14px}
+.section{max-width:1144px;margin:0 auto;padding:55px 28px}.section-heading{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px}.section h2{font:600 clamp(25px,3vw,36px) Orbitron,sans-serif;margin:8px 0}.status,.chip{font-size:10px;letter-spacing:1px;color:#7fe6cb;border:1px solid #245849;background:#0b211e;padding:7px 10px;border-radius:3px}.dashboard-grid{display:grid;grid-template-columns:1.1fr 1.2fr .7fr;gap:14px}.panel,.feature-card{background:linear-gradient(145deg,#0d192b,#080f1d);border:1px solid var(--line);border-radius:8px;padding:22px}.panel-label{margin:0 0 20px}.progress-number{display:flex;align-items:baseline;gap:10px}.progress-number strong{font:700 38px Orbitron;color:var(--cyan)}.progress-number span,.muted{color:var(--muted);font-size:12px}.progress-track{height:5px;background:#1a2b40;border-radius:10px;margin:18px 0}.progress-track div{height:100%;width:15%;background:linear-gradient(90deg,#168cff,#5be6ff);box-shadow:0 0 10px #27bfff;border-radius:10px;transition:width .2s}.range-label{font-size:11px;color:#a7bbce}.panel input[type=range]{width:100%;accent-color:#29baff;margin-top:10px}.tiny{font-size:10px;line-height:1.6;color:#7189a3}.checklist{display:grid;gap:13px}.checklist label{font-size:12px;color:#b8c9d9;display:flex;gap:9px;align-items:center}.checklist input{accent-color:#19a9ff}.stat-panel strong{font:700 50px Orbitron;color:var(--blue)}.stat-panel span{display:block;color:#a7bbce;font-size:12px}.mini-line{height:1px;background:linear-gradient(90deg,var(--blue),transparent);margin:20px 0}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.feature-card{min-height:210px;transition:transform .2s,border-color .2s}.feature-card:hover{transform:translateY(-3px);border-color:#286a9c}.card-icon{font-size:25px;color:var(--blue);margin-bottom:17px}.card-tag{font-size:9px;margin:0 0 12px}.feature-card h3,.sketch-copy h3{font:600 17px Orbitron,sans-serif;margin:0 0 12px}.feature-card p:not(.card-tag){font-size:12px;line-height:1.7;color:#91a7bc}.feature-card .chip{display:inline-block;color:#81cfff;background:#0c1d31;border-color:#1c4161;margin-top:8px}
+.split{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}.lesson-list details{border-bottom:1px solid var(--line);padding:17px 0}.lesson-list summary{cursor:pointer;list-style:none;font:12px Orbitron,sans-serif;color:#c7e5fa}.lesson-list summary:after{content:"+";float:right;color:var(--blue);font-size:18px}.lesson-list details[open] summary:after{content:"−"}.lesson-list p{font-size:12px;line-height:1.8;color:var(--muted)}
+.sketch-panel{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#081322}.blueprint{min-height:320px;display:grid;place-items:center;background:linear-gradient(#0c2842,#071528);color:#53c8ff}.blueprint svg{width:min(90%,300px);filter:drop-shadow(0 0 8px #169cff55)}.sketch-copy{padding:30px}.sketch-copy p{font-size:12px;line-height:1.8;color:#9cb1c5}.sketch-copy label{display:block;font-size:11px;color:#b8d2e8;margin:18px 0 8px}textarea{width:100%;min-height:85px;resize:vertical;background:#050b15;border:1px solid #203c59;border-radius:5px;color:white;padding:12px;font:12px Inter,sans-serif}textarea:focus{outline:1px solid var(--blue)}.sketch-copy button{margin-top:12px}
+footer{border-top:1px solid var(--line);padding:35px 28px;text-align:center}footer .brand{justify-content:center}footer p{font:10px Orbitron,sans-serif;letter-spacing:2px;color:#6e91ad;margin:15px}footer small{font-size:10px;color:#526a82}
+@media(max-width:800px){.topbar{padding:0 18px}.menu-button{display:block}nav{display:none;position:absolute;top:76px;left:0;right:0;background:#07101e;padding:20px;z-index:5;flex-direction:column;border-bottom:1px solid var(--line)}nav.open{display:flex}.hero{grid-template-columns:1fr;padding:48px 20px 30px}.hero-copy{z-index:1}.rocket-scene{height:300px;margin-top:-10px}.section{padding:42px 20px}.dashboard-grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.split{grid-template-columns:1fr;gap:20px}.sketch-panel{grid-template-columns:1fr}.blueprint{min-height:250px}.section-heading{align-items:start;gap:10px;flex-wrap:wrap}}
+@media(min-width:801px) and (max-width:1000px){nav{gap:13px}nav a{font-size:11px}.dashboard-grid{grid-template-columns:1fr 1fr}.stat-panel{grid-column:span 2}}
+
+const progressInput = document.getElementById("progressInput");
+const progressNumber = document.getElementById("progressNumber");
+const progressBar = document.getElementById("progressBar");
+progressInput.addEventListener("input", () => {
+  const value = Number(progressInput.value);
+  progressNumber.textContent = `${value}%`;
+  progressBar.style.width = `${value}%`;
+});
+
+const checks = [...document.querySelectorAll(".mission-check")];
+const checkCount = document.getElementById("checkCount");
+function updateChecks() {
+  const done = checks.filter(check => check.checked).length;
+  checkCount.textContent = `${done} of ${checks.length} completed`;
+}
+checks.forEach(check => check.addEventListener("change", updateChecks));
+
+const note = document.getElementById("sketchNote");
+const saveMessage = document.getElementById("saveMessage");
+try {
+  note.value = localStorage.getItem("novaXSketchNotes") || "";
+} catch (error) {
+  // Storage may be unavailable in some browser preview modes.
+}
+document.getElementById("saveNote").addEventListener("click", () => {
+  try {
+    localStorage.setItem("novaXSketchNotes", note.value);
+    saveMessage.textContent = "Notes saved on this device.";
+  } catch (error) {
+    saveMessage.textContent = "Saving is unavailable in this browser mode. Copy your notes somewhere safe.";
+  }
+});
+
+const menuButton = document.getElementById("menuButton");
+const nav = document.getElementById("nav");
+menuButton.addEventListener("click", () => nav.classList.toggle("open"));
+nav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => nav.classList.remove("open")));
+
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch(() => {}));
+}
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="90" fill="#050914"/><circle cx="256" cy="256" r="170" fill="none" stroke="#087fe8" stroke-width="12"/><path d="M256 60C180 160 185 300 256 390C327 300 332 160 256 60Z" fill="#eaf8ff" stroke="#35bfff" stroke-width="12"/><path d="M256 390L220 460L256 435L292 460Z" fill="#16a8ff"/><circle cx="256" cy="210" r="27" fill="#06162c" stroke="#35bfff" stroke-width="12"/><path d="M85 310Q256 160 427 310" fill="none" stroke="#35bfff" stroke-width="13"/><text x="256" y="490" font-family="Arial" font-size="52" font-weight="bold" text-anchor="middle" fill="#f4fbff">NOVA X</text></svg>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050914">
+  <meta name="description" content="NOVA X — Beyond the Limits of Earth. Explore rocket projects, mission progress, and space science.">
+  <title>NOVA X | Space Hub</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="NOVA X home">
+      <span class="brand-mark">✦</span><span>NOVA <b>X</b></span>
+    </a>
+    <button class="menu-button" id="menuButton" aria-label="Toggle navigation">☰</button>
+    <nav id="nav">
+      <a href="#projects">Projects</a><a href="#dashboard">Mission Control</a>
+      <a href="#learn">Learn</a><a href="#sketches">Sketches</a><a href="#news">Space News</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow">INDEPENDENT SPACE TECHNOLOGY PROJECT</p>
+        <h1>BEYOND THE<br><span>LIMITS OF EARTH.</span></h1>
+        <p class="intro">A young space-tech initiative exploring the science, engineering, and imagination behind tomorrow's space missions.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#projects">Explore projects <span>↗</span></a>
+          <a class="button secondary" href="#learn">Start learning</a>
+        </div>
+        <div class="hero-foot"><span class="pulse"></span> BUILDING THE FUTURE, ONE IDEA AT A TIME</div>
+      </div>
+      <div class="rocket-scene" aria-label="Illustration of a rocket in space">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="planet"></div><div class="rocket">▲<div class="rocket-window"></div><div class="flame"></div></div>
+        <div class="scene-label">NX / 001<br><small>MISSION CONCEPT</small></div>
+        <div class="star star-a">✦</div><div class="star star-b">✧</div><div class="star star-c">✦</div>
+      </div>
+    </section>
+
+    <section class="section" id="dashboard">
+      <div class="section-heading"><div><p class="eyebrow">MISSION CONTROL</p><h2>Mission dashboard</h2></div><span class="status">● CONCEPT STAGE</span></div>
+      <div class="dashboard-grid">
+        <article class="panel progress-panel">
+          <p class="panel-label">PROJECT PROGRESS</p><div class="progress-number"><strong id="progressNumber">15%</strong><span>Learning & planning</span></div>
+          <div class="progress-track"><div id="progressBar"></div></div>
+          <label class="range-label" for="progressInput">Update your progress</label>
+          <input id="progressInput" type="range" min="0" max="100" value="15">
+          <p class="tiny">This tracker is for learning goals—not a real launch system.</p>
+        </article>
+        <article class="panel">
+          <p class="panel-label">MISSION CHECKLIST</p>
+          <div class="checklist">
+            <label><input type="checkbox" class="mission-check"> Define the NOVA X mission</label>
+            <label><input type="checkbox" class="mission-check"> Study basic space science</label>
+            <label><input type="checkbox" class="mission-check"> Create a concept sketch</label>
+            <label><input type="checkbox" class="mission-check"> Document a safe classroom project</label>
+          </div>
+          <p class="tiny" id="checkCount">0 of 4 completed</p>
+        </article>
+        <article class="panel stat-panel"><p class="panel-label">PROJECT STATUS</p><strong>01</strong><span>Active concept</span><div class="mini-line"></div><p class="tiny">NOVA X — Space Hub</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section-heading"><div><p class="eyebrow">ENGINEERING IDEAS</p><h2>Rocket projects</h2></div></div>
+      <div class="cards">
+        <article class="feature-card"><div class="card-icon">⌁</div><p class="card-tag">PROJECT 01 / CONCEPT</p><h3>NX Explorer</h3><p>A concept study of how rockets are structured and how engineers plan missions.</p><span class="chip">Research & design</span></article>
+        <article class="feature-card"><div class="card-icon">◎</div><p class="card-tag">PROJECT 02 / LEARNING</p><h3>Flight principles</h3><p>Explore forces, stability, and the physics that help objects move through the air.</p><span class="chip">Science study</span></article>
+        <article class="feature-card"><div class="card-icon">⌘</div><p class="card-tag">PROJECT 03 / DOCUMENTATION</p><h3>Mission journal</h3><p>Record goals, diagrams, observations, questions, and what you learn each week.</p><span class="chip">Project log</span></article>
+      </div>
+    </section>
+
+    <section class="section split" id="learn">
+      <div><p class="eyebrow">SPACE ACADEMY</p><h2>Understand the<br><span class="blue">universe.</span></h2><p class="muted">Start with the ideas that make space exploration possible. Select a topic to reveal a quick lesson.</p></div>
+      <div class="lesson-list">
+        <details><summary>01 / What is a rocket?</summary><p>A rocket moves by expelling mass in one direction, producing thrust in the opposite direction. This is an example of Newton's third law.</p></details>
+        <details><summary>02 / What is an orbit?</summary><p>An orbit is a curved path around an object. A satellite keeps falling toward Earth, but its sideways speed means it continually travels around Earth.</p></details>
+        <details><summary>03 / Why do rockets have stages?</summary><p>Some launch vehicles discard empty sections as they go, reducing mass. Real launch vehicle design is complex and requires professional engineering and safety oversight.</p></details>
+      </div>
+    </section>
+
+    <section class="section" id="sketches">
+      <div class="section-heading"><div><p class="eyebrow">DESIGN LAB</p><h2>Rocket design sketches</h2></div></div>
+      <div class="sketch-panel">
+        <div class="blueprint"><svg viewBox="0 0 300 300" role="img" aria-label="Simple rocket concept sketch"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M150 28 C115 75 115 145 150 210 C185 145 185 75 150 28Z"/><path d="M126 150 L90 205 L130 190 M174 150 L210 205 L170 190"/><circle cx="150" cy="110" r="17"/><path d="M140 210 L140 250 L150 270 L160 250 L160 210"/><path d="M45 40H75 M60 25V55 M220 70H250 M235 55V85 M45 250H75 M60 235V265"/><path d="M30 150H270 M150 15V285" stroke-dasharray="4 7" opacity=".45"/></g></svg></div>
+        <div class="sketch-copy"><p class="card-tag">CONCEPT DRAWING / NX-01</p><h3>Start with an idea.</h3><p>Use your notebook to draw a rocket concept. Label the nose, body, fins, and any parts you are studying. Keep designs conceptual and discuss physical experiments with a qualified adult.</p>
+          <label for="sketchNote">Your sketch notes</label><textarea id="sketchNote" placeholder="Example: My concept focuses on a stable shape and clear labels..."></textarea><button class="button primary" id="saveNote">Save notes on this device</button><p class="tiny" id="saveMessage" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="news">
+      <div class="section-heading"><div><p class="eyebrow">THE SPACE FRONTIER</p><h2>Space news</h2></div><span class="chip">Sample headlines</span></div>
+      <div class="cards">
+        <article class="feature-card news-card"><p class="card-tag">SPACE SCIENCE</p><h3>Observing the universe</h3><p>Space telescopes help scientists study distant galaxies, stars, and planets.</p><span class="tiny">Sample topic — not live news</span></article>
+        <article class="feature-card news-card"><p class="card-tag">EARTH ORBIT</p><h3>Satellites at work</h3><p>Satellites support communication, weather forecasting, navigation, and research.</p><span class="tiny">Sample topic — not live news</span></article>
+        <article class="feature-card news-card"><p class="card-tag">EXPLORATION</p><h3>Robotic missions</h3><p>Robotic spacecraft explore places that are difficult or impossible for people to visit.</p><span class="tiny">Sample topic — not live news</span></article>
+      </div>
+    </section>
+  </main>
+  <footer><a class="brand" href="#home"><span class="brand-mark">✦</span><span>NOVA <b>X</b></span></a><p>BEYOND THE LIMITS OF EARTH.</p><small>Student-led learning concept. Not an operational aerospace company.</small></footer>
+  <script src="app.js"></script>
+</body>
+</html>
+{
+  "name": "NOVA X Space Hub",
+  "short_name": "NOVA X",
+  "description": "Explore space science, rocket concepts, and mission progress.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050914",
+  "theme_color": "#050914",
+  "icons": [
+    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}
